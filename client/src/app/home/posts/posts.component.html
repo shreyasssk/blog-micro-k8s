@@ -1,0 +1,14 @@
+<div *ngIf="loadedPosts.length < 1" class="alert alert-primary" role="alert">
+  No posts available
+</div>
+<div *ngIf="loadedPosts.length >= 1" class="row">
+  <div *ngFor="let post of loadedPosts" class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">{{ post.title }}</h2>
+        <app-comments [postComment]="post.comments" [postId]="post.id"></app-comments>
+      </div>
+    </div>
+    <hr>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="container">
+  <br>
+  <h1>Compose Post</h1>
+</div>
+
+<div class="container">
+  <form (ngSubmit)="onSubmit(f.value)" #f="ngForm">
+    <div class="form-group">
+      <label>Title</label>
+      <input ngModel class="form-control" type="text" name="title" required>
+    </div>
+    <button [disabled]="!f.valid" class="btn btn-primary" type="submit" name="button">Publish</button>
+  </form>
+</div>
+<hr>
+
+<app-posts></app-posts>

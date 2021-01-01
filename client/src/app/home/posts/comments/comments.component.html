@@ -1,0 +1,32 @@
+<div class="mb-3">
+    <div *ngIf="postComment.length < 1" class="alert alert-primary" role="alert">
+      No comments available
+    </div>
+    <div class="card">
+      <div *ngIf="postComment.length >= 1" class="card-body">
+        <ul class="card-text">
+          <div *ngFor="let comment of postComment">
+            <div *ngIf="comment.status === 'pending'">
+              <li class="text-warning">This comment is awating moderation</li>
+            </div>
+            <div *ngIf="comment.status === 'approved'">
+              <li>{{ comment.content }}</li>
+            </div>
+            <div *ngIf="comment.status === 'rejected'">
+              <li class="text-danger">This comment has been rejected!</li>
+            </div>
+          </div>
+          <br>
+        </ul>
+      </div>
+    </div>
+    <hr>
+    <form (ngSubmit)="onSubmit(f.value)" #f="ngForm">
+      <div class="form-group">
+        <label for="comment-data" class="form-label">Comment :</label>
+        <input required ngModel type="text" class="form-control" id="comment-data" name="content"
+          placeholder="Your thoughts?">
+      </div>
+      <button [disabled]="!f.valid" class="btn btn-primary" type="submit">Post</button>
+    </form>
+  </div>
