@@ -37,16 +37,18 @@ jobs:
             ./server/query/Dockerfile
           platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
           push: true
+          secrets: |
+            SHA=$GITHUB_SHA
           tags: |
-            shreyasssk/blog/client:$GITHUB_SHA
+            shreyasssk/blog/client:SHA
             shreyasssk/blog/client:latest
-            shreyasssk/blog/comments:$GITHUB_SHA
+            shreyasssk/blog/comments:SHA
             shreyasssk/blog/comments:latest
-            shreyasssk/blog/event-bus:$GITHUB_SHA
+            shreyasssk/blog/event-bus:SHA
             shreyasssk/blog/event-bus:latest
-            shreyasssk/blog/moderation:$GITHUB_SHA
+            shreyasssk/blog/moderation:SHA
             shreyasssk/blog/moderation:latest
-            shreyasssk/blog/posts:$GITHUB_SHA
+            shreyasssk/blog/posts:SHA
             shreyasssk/blog/posts:latest
-            shreyasssk/blog/query:$GITHUB_SHA
+            shreyasssk/blog/query:SHA
             shreyasssk/blog/query:latest
