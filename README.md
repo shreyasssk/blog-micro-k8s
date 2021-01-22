@@ -18,3 +18,10 @@ $ cd /etc
 $ sudo nano hosts
 ```
 in the last line add the ip address on your minikube node and type 'posts.com' after a space
+
+### Prerequisites required:
+- Docker
+- Kubernetes
+- Minikube
+- Ingress Nginx (https://kubernetes.github.io/ingress-nginx/)
+- Skaffold
