@@ -1,4 +1,4 @@
-name: ci
+name: GitHub Actions
 
 on:
   push:
@@ -18,13 +18,12 @@ jobs:
       
       - name: Building Client
         run: | 
-          docker build -t shreyasssk/blog/client:latest ./client
-          docker build --cache-from shreyasssk/blog/client:latest -t shreyasssk/blog/client:$GITHUB_SHA ./client
+          docker build -t shreyasssk/blog-client:latest shreyasssk/blog-client:$GITHUB_SHA ./client
       
       - name: Deploying to Docker Registry
         run: |
-          docker push shreyasssk/blog/client:$GITHUB_SHA
-          docker push shreyasssk/blog/client:latest
+          docker push shreyasssk/blog-client:$GITHUB_SHA
+          docker push shreyasssk/blog-client:latest
           
   Comments:
     runs-on: ubuntu-latest
