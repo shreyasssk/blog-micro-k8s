@@ -18,7 +18,8 @@ jobs:
       
       - name: Building Client
         run: | 
-          docker build -t shreyasssk/blog-client:latest shreyasssk/blog-client:$GITHUB_SHA ./client
+          docker build -t shreyasssk/blog-client:latest ./client
+          docker build --cache-from shreyasssk/blog-client:latest -t shreyasssk/blog-client:$GITHUB_SHA ./client
       
       - name: Deploying to Docker Registry
         run: |
