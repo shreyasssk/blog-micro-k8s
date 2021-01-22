@@ -14,10 +14,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       
-      - name: Building Client
-        run: | 
-          docker build -t shreyasssk/blog/client:latest ./client/.
-          docker build --cache-from shreyasssk/blog/client:latest -t shreyasssk/blog/client:latest:$GITHUB_SHA ./client/.
           
       - name: Building Server/Comments
         run: |
