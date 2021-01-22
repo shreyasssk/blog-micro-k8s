@@ -5,50 +5,41 @@ on:
     branches: main
 
 jobs:
-  multi-registries:
+  Build:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v2
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      -
-        name: Login to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v1 
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: |
-            ./client/Dockerfile
-            ./server/comments/Dockerfile
-            ./server/event-bus/Dockerfile
-            ./server/moderation/Dockerfile
-            ./server/posts/Dockerfile
-            ./server/query/Dockerfile
-          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
-          push: true
-          secrets: |
-            SHA=$GITHUB_SHA
-          tags: |
-            shreyasssk/blog/client:SHA
-            shreyasssk/blog/client:latest
-            shreyasssk/blog/comments:SHA
-            shreyasssk/blog/comments:latest
-            shreyasssk/blog/event-bus:SHA
-            shreyasssk/blog/event-bus:latest
-            shreyasssk/blog/moderation:SHA
-            shreyasssk/blog/moderation:latest
-            shreyasssk/blog/posts:SHA
-            shreyasssk/blog/posts:latest
-            shreyasssk/blog/query:SHA
-            shreyasssk/blog/query:latest
+      
+      - name: Building Client
+        run: | 
+          docker build -t shreyasssk/blog/client:latest ./client/.
+          docker build --cache-from shreyasssk/blog/client:latest -t shreyasssk/blog/client:latest:$GITHUB_SHA ./client/.
+          
+      - name: Building Server/Comments
+        run: |
+          docker build -t shreyasssk/blog/comments:latest ./server/comments/.
+          docker build --cache-from shreyasssk/blog/comments:latest -t shreyasssk/blog/comments:$GITHUB_SHA ./server/comments/.
+          
+      - name: Building Server/Event-Bus
+        run: |
+          docker build -t shreyasssk/blog/event-bus:latest ./server/event-bus/.
+          docker build --cache-from shreyasssk/blog/event-bus:latest -t shreyasssk/blog/event-bus:$GITHUB_SHA ./server/event-bus/.
+          
+      - name: Building Server/Moderation
+        run: |
+          docker build -t shreyasssk/blog/moderation:latest ./server/moderation/.
+          docker build --cache-from shreyasssk/blog/moderation -t shreyasssk/blog/moderation:$GITHUB_SHA ./server/moderation/.
+          
+      - name: Building Server/Posts
+        run: |
+          docker build -t shreyasssk/blog/posts:latest ./server/posts/.
+          docker build --cache-from shreyasssk/blog/posts:latest -t shreyasssk/blog/posts:$GITHUB_SHA ./server/posts/.
+          
+      - name: Building Server/Query
+        run: |
+          docker build -t shreyasssk/blog/query:latest ./server/query/.
+          docker build --cache-from shreyasssk/blog/query:latest -t shreyasssk/blog/query:$GITHUB_SHA ./server/query/.
