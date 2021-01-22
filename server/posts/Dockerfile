@@ -10,6 +10,6 @@ COPY . .
 
 FROM astefanutti/scratch-node
 
-COPY --from=build /app /app
+COPY --from=build /app /
 
 ENTRYPOINT ["node", "app.js"]
